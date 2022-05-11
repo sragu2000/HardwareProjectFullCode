@@ -120,13 +120,43 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ADC.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="gsm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="headerfiles.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="I2C_Master_C_file.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="I2C_Master_H_file.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LCD_16x2_H_file.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="mpu6050.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MPU6050_res_define.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="registerFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Track.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="USART_Interrupt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="USART_Interrupt.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

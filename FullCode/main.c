@@ -9,8 +9,9 @@ void offHazardLight();
 int main(void){
 	start:
 	GGA_Index=0;
-	setOutput(PORTC,led);
-	setOutput(PORTD,buzzer);
+	setOutput(DDRD,led);
+	setOutput(DDRD,buzzer);
+	setOutput(DDRD,musicSystem);
 	LCD_Init();
 	_delay_ms(3000);/* wait for GPS receiver to initialize */
 	USART_initialize(9600); /* GSM */
@@ -96,13 +97,13 @@ void stopAlarm(){
 	portLow(PORTD,buzzer);
 }
 void onHazardLight(){
-	portHigh(PORTC,led);
+	portHigh(PORTD,led);
 }
 void offHazardLight(){
-	portLow(PORTC,led);
+	portLow(PORTD,led);
 }
 void playRadio(){
-	//function to play radio
+	portHigh(PORTD,musicSystem);
 }
 void PWM_init(){
 	/*set fast PWM mode with non-inverted output*/

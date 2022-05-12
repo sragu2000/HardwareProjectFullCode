@@ -18,6 +18,7 @@
 #include "gsm.h"
 //pin definitions
 #define flame 4
-#define led 0
+#define led 6
 #define buzzer 7
-#define alcohol 6
+#define alcohol 5
+#define musicSystem 5

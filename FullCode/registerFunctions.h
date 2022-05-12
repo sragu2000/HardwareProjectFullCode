@@ -9,7 +9,7 @@
 #define enablePullup(register,pinNumber) register = register | (1<<pinNumber)
 
 /*
-setOutput(PORTC,1);
+setOutput(DDRC,1);
 portHigh(PORTC,1);
 portLow(PORTC,1);
 */

@@ -23,7 +23,7 @@ main.d main.o: .././main.c .././headerfiles.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  .././USART_Interrupt.h .././ADC.h .././Track.h .././MPU6050_res_define.h \
- .././I2C_Master_H_file.h .././mpu6050.h .././gsm.h
+ .././I2C_Master_H_file.h .././mpu6050.h .././pwm.h .././gsm.h
 
 .././headerfiles.h:
 
@@ -84,5 +84,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././I2C_Master_H_file.h:
 
 .././mpu6050.h:
+
+.././pwm.h:
 
 .././gsm.h:

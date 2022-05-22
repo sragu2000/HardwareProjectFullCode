@@ -15,6 +15,7 @@
 #include "MPU6050_res_define.h"
 #include "I2C_Master_H_file.h"
 #include "mpu6050.h"
+#include "pwm.h"
 #include "gsm.h"
 //pin definitions
 #define flame 4

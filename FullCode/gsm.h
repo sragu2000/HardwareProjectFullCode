@@ -30,6 +30,7 @@ void USART_send(char *str)
 }
 void sendMessage(char *msg)
 {
+	PORTD=0x04; // change mux selector line to GSM Module's TXD
 	unsigned char cmd_1[4]="AT";
 	unsigned char cmd_2[10]="AT+CMGF=1";
 	unsigned char cmd_3[10]="AT+CMGS=";
@@ -84,4 +85,5 @@ void sendMessage(char *msg)
 	LCD_String_xy(1,0,"Message sent");
 	_delay_ms(3000);
 	LCD_Clear();
+	PORTD=0x00; // change mux back to GSM
 }

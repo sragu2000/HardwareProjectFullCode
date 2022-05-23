@@ -6,30 +6,42 @@
  *  Author: ishu
  */ 
 
-
+void convert_time_to_UTC();
 void convert_to_degrees(char *);
 
 #define Buffer_Size 150
 #define degrees_buffer_size 20
 
-char Latitude_Buffer[15],Longitude_Buffer[15],Altitude_Buffer[8];
-char degrees_buffer[degrees_buffer_size];                      /* save latitude or longitude in degree */
-char GGA_Buffer[Buffer_Size];                                  /* save GGA string */
+char Latitude_Buffer[15],Longitude_Buffer[15],Time_Buffer[15],Altitude_Buffer[8];//define the string size
+char degrees_buffer[degrees_buffer_size];                      /* save latitude or longitude in degree - degrees_buffer[20]*/
+char GGA_Buffer[Buffer_Size];                                  /* save GGA string - GGA_Buffer[150] */
 uint8_t GGA_Pointers[20];                                      /* to store instances of ',' */
 char GGA_CODE[3];
 
-volatile uint16_t GGA_Index, CommaCounter;
+volatile uint16_t GGA_Index, CommaCounter; // unsigned 16-bit integer - integers between 0 and 65,535
 
 bool	IsItGGAString	= false,
 flag1			= false,
 flag2			= false;
 
 
+void get_gpstime(){
+	cli();  //Command Line Interface - CLIs accept as input commands that are entered by keyboard
+	uint8_t time_index=0; // unsigned 8-bit integer- integer has a range of 0 to 255
+	/* parse Time in GGA string stored in buffer */
+	for(uint8_t index = 0;GGA_Buffer[index]!=','; index++){
+		
+		Time_Buffer[time_index] = GGA_Buffer[index];
+		time_index++;
+	}
+	convert_time_to_UTC();   //In this function the GPS time string type convert as an integer and print that time
+	sei(); //It is a macro that executes an assembler instruction to enable interrupts.
+}
 
-void get_latitude(uint16_t lat_pointer){
-	cli();
-	uint8_t lat_index;
-	uint8_t index = lat_pointer+1;
+void get_latitude(uint16_t lat_pointer){  //unsigned 16-bit integer - integers between 0 and 65,535
+	cli(); //Command Line Interface - CLIs accept as input commands that are entered by keyboard
+	uint8_t lat_index; //unsigned 8-bit integer- integer has a range of 0 to 255
+	uint8_t index = lat_pointer+1;//unsigned 8-bit integer- integer has a range of 0 to 255
 	lat_index=0;
 	
 	/* parse Latitude in GGA string stored in buffer */
@@ -40,13 +52,13 @@ void get_latitude(uint16_t lat_pointer){
 	
 	Latitude_Buffer[lat_index++] = GGA_Buffer[index++];
 	Latitude_Buffer[lat_index]= GGA_Buffer[index];		/* get direction */
-	convert_to_degrees(Latitude_Buffer);
-	sei();
+	convert_to_degrees(Latitude_Buffer);   // convert raw latitude into degree format and pass that value as string
+	sei(); //It is a macro that executes an assembler instruction to enable interrupts.
 }
 
 void get_longitude(uint16_t long_pointer){
-	cli();
-	uint8_t long_index;
+	cli(); //Command Line Interface - CLIs accept as input commands that are entered by keyboard
+	uint8_t long_index;  //unsigned 8-bit integer- integer has a range of 0 to 255
 	uint8_t index = long_pointer+1;
 	long_index=0;
 	
@@ -58,13 +70,13 @@ void get_longitude(uint16_t long_pointer){
 	
 	Longitude_Buffer[long_index++] = GGA_Buffer[index++];
 	Longitude_Buffer[long_index]   = GGA_Buffer[index]; /* get direction */
-	convert_to_degrees(Longitude_Buffer);
-	sei();
+	convert_to_degrees(Longitude_Buffer); // convert raw longitude into degree format and pass that value as string
+	sei(); //It is a macro that executes an assembler instruction to enable interrupts.
 }
 
-void get_altitude(uint16_t alt_pointer){
-	cli();
-	uint8_t alt_index;
+void get_altitude(uint16_t alt_pointer){  //unsigned 16-bit integer - integers between 0 and 65,535
+	cli(); //Command Line Interface - CLIs accept as input commands that are entered by keyboard
+	uint8_t alt_index;  //unsigned 8-bit integer- integer has a range of 0 to 255
 	uint8_t index = alt_pointer+1;
 	alt_index=0;
 	/* parse Altitude in GGA string stored in buffer */
@@ -74,9 +86,21 @@ void get_altitude(uint16_t alt_pointer){
 	}
 	
 	Altitude_Buffer[alt_index]   = GGA_Buffer[index+1];
-	sei();
+	sei();//It is a macro that executes an assembler instruction to enable interrupts.
 }
+void convert_time_to_UTC()
+{
+	unsigned int hour, min, sec;
+	uint32_t Time_value;   //32-bit unsigned integer - range [0 to 4294967295]
+	
+	Time_value = atol(Time_Buffer);               /* atol is an in-build function which convert string to integer */
+	hour = (Time_value / 10000);                  /* get hour from time_value integer */
+	min = (Time_value % 10000) / 100;             /* get minute from time_value integer */
+	sec = (Time_value % 10000) % 100;             /* get second from time_value integer*/
 
+	sprintf(Time_Buffer, "%d:%d:%d", hour,min,sec); //sprint means String_Print.Here the time will print
+	
+}
 
 void convert_to_degrees(char *raw){
 	
@@ -86,7 +110,7 @@ void convert_to_degrees(char *raw){
 	int32_t degrees;
 	
 	float position;
-	value = atof(raw);                             /* convert string into float for conversion */
+	value = atof(raw); /* convert string into float for conversion */
 	
 	/* convert raw latitude/longitude into degree format */
 	decimal_value = (value/100);
@@ -94,20 +118,15 @@ void convert_to_degrees(char *raw){
 	temp = (decimal_value - (int)decimal_value)/0.6;
 	position = (float)degrees + temp;
 	
-	dtostrf(position, 6, 4, degrees_buffer);       /* convert float value into string */
+	dtostrf(position, 6, 4, degrees_buffer); /* dtostrf is a function that convert float value into string.Here the position is a float value and it convert as a string degree buffer variable*/
 }
 
 
-void getAllValuesGps(){
-	get_altitude(GGA_Pointers[7]);         /* Extract Altitude in meters*/
-	get_longitude(GGA_Pointers[2]);        /* Extract Longitude */
-	get_latitude(GGA_Pointers[0]);         /* Extract Latitude */
-}
 
 ISR (USART_RXC_vect)
 {
-	uint8_t oldsrg = SREG;
-	cli();
+	uint8_t oldsrg = SREG;  //unsigned 8-bit integer- integer has a range of 0 to 255
+	cli();					//Command Line Interface - CLIs accept as input commands that are entered by keyboard
 	char received_char = UDR;
 	
 	if(received_char =='$'){                                                    /* check for '$' */

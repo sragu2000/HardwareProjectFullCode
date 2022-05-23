@@ -28,7 +28,8 @@ void USART_send(char *str)
 		str++;
 	}
 }
-void sendMessage(char *msg)
+
+void sendMessage(char *msg, char *longtitude, char *latitude)
 {
 	PORTD=0x04; // change mux selector line to GSM Module's TXD
 	unsigned char cmd_1[4]="AT";

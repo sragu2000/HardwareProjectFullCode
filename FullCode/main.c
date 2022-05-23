@@ -6,6 +6,9 @@ void onHazardLight();
 void playRadio();
 void PWM_init();
 void offHazardLight();
+void getAllValuesGps();
+char longtitude[15];
+char latitude[15];
 int main(void){
 	start:
 	GGA_Index=0;
@@ -31,9 +34,9 @@ int main(void){
 			stopAlarm();offHazardLight();
 			LCD_String("Flame Detected !");
 			getAllValuesGps();
-			LCD_String(Altitude_Buffer);
-			LCD_String(degrees_buffer);
-			sendMessage("Flame Detected");
+			//LCD_String(Altitude_Buffer);
+			//LCD_String(degrees_buffer);
+			sendMessage("Flame Detected",longtitude,latitude);
 		}//if end
 		else{
 			//set wheel speed vehicle
@@ -52,9 +55,9 @@ int main(void){
 					LCD_Clear();
 					LCD_String("Alcohol Detected"); 
 					getAllValuesGps();
-					LCD_String(Altitude_Buffer);
-					LCD_String(degrees_buffer);
-					sendMessage("Alcohol Detected");
+					//LCD_String(Altitude_Buffer);
+					//LCD_String(degrees_buffer);
+					sendMessage("Alcohol Detected",longtitude,latitude);
 				}//if end
 				else if(1 && isDriverSleepingGyro(Xa,Ya,Za)){//alcohol not detected  //1 ==> IR Detection                     
 						ringAlarm();onHazardLight();
@@ -67,9 +70,9 @@ int main(void){
 						}//for loop end
 						LCD_String("Sleeping");
 						getAllValuesGps();
-						LCD_String(Altitude_Buffer);
-						LCD_String(degrees_buffer);
-						sendMessage("Driver is Sleeping");
+						//LCD_String(Altitude_Buffer);
+						//LCD_String(degrees_buffer);
+						sendMessage("Driver is Sleeping",longtitude,latitude);
 						playRadio();
 						//reduce speed of the vehicle
 						for(int i=(int)speed;i>=20;i--){
@@ -105,3 +108,15 @@ void offHazardLight(){
 void playRadio(){
 	portHigh(PORTD,musicSystem);
 }
+void getAllValuesGps(){
+		get_gpstime();                         // Extract Time in UTC- In this function the get the GPS time string type and convert as an integer and print that time
+		get_latitude(GGA_Pointers[0]);         // Extract Latitude- convert raw latitude value into degree format and pass that value as string
+		//degrees_buffer latitude
+		strcpy(latitude,degrees_buffer);
+		get_longitude(GGA_Pointers[2]);        /* Extract Longitude */
+		//degrees_buffer longtitude
+		strcpy(longtitude,degrees_buffer);
+		//get_altitude(GGA_Pointers[7]);         /* Extract Altitude in meters*/ 
+}
+	
+

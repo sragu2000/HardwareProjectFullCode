@@ -69,15 +69,9 @@ int main(void){
 						sendMessage("Driver is Sleeping",longtitude,latitude);
 						playRadio();
 						//reduce speed of the vehicle
-						for(int i=(int)speed;i>=20;i--){
-							char c[5];
-							itoa(i,c,10);
-							LCD_String(c);
-							OCR0=i;
-							_delay_ms(100);
-							LCD_Clear();
-						}
-						while(1){} //infinite loop with purpose
+						OCR0=0;
+						//driver should reset the system in order to drive again
+						while(1){}//let motor to slowdown fully
 					}
 				}
 			}

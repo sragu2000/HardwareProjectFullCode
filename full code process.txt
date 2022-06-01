@@ -1,0 +1,26 @@
+if(flame detected){
+    blinkHazardlight();
+    ringalarm();
+    displaymsg("msg");
+    sendlocation();
+}
+else{
+    if(pressure detected){
+        if(alcohol detected){
+            ringalarm();
+            displaymsg("msg");
+            sendlocation();
+        }
+        else if(gyroscope value & IR sensor value - detected 2sec){
+            ringalarm();
+            blinkHazardlight();
+            delay(5 sec);
+            if(is alarm stopped?==No){
+                displaymsg("msg");
+                sendlocation();
+                playradio();
+                reducespeed();
+            }
+        }
+    }
+}

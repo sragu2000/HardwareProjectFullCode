@@ -1,23 +1,16 @@
 #define F_CPU 8000000UL
 #include "headerfiles.h"
-char longtitude[15];
-char latitude[15];
 int main(void){
 	start:
-	GGA_Index=0;
-	setOutput(DDRD,led);
-	setOutput(DDRD,buzzer);
-	setOutput(DDRD,musicSystem);
+	DDRD=0xE4;
 	LCD_Init();
-	_delay_ms(3000);/* wait for GPS receiver to initialize */
-	USART_initialize(9600); /* GSM */
-	USART_Init(9600);/* GPS */
 	ADC_Init();
-	sei();
 	I2C_Init();
 	PWM_init();
 	MPU6050_Init();
 	LCD_Clear();
+	LCD_String("Welcome");
+	_delay_ms(200);
 	float Xa,Ya,Za; // for gyroscope
 	while (1){
 		//flame detection
@@ -28,8 +21,6 @@ int main(void){
 			stopAlarm();
 			offHazardLight();
 			LCD_String("Flame Detected !");
-			getAllValuesGps();
-			sendMessage("Flame Detected",longtitude,latitude);
 		}
 		else{
 			//set wheel speed vehicle
@@ -45,8 +36,6 @@ int main(void){
 					ringAlarm();
 					_delay_ms(1000);
 					stopAlarm();
-					getAllValuesGps();
-					sendMessage("Alcohol Detected",longtitude,latitude);
 				}
 				else{
 					Read_RawValue();
@@ -65,8 +54,6 @@ int main(void){
 							_delay_ms(250);
 						}
 						LCD_String("Sleeping");
-						getAllValuesGps();
-						sendMessage("Driver is Sleeping",longtitude,latitude);
 						playRadio();
 						//reduce speed of the vehicle
 						OCR0=0;
@@ -94,17 +81,6 @@ void offHazardLight(){
 void playRadio(){
 	portHigh(PORTD,musicSystem);
 }
-void getAllValuesGps(){
-		get_gpstime();                         // Extract Time in UTC- In this function the get the GPS time string type and convert as an integer and print that time
-		get_latitude(GGA_Pointers[0]);         // Extract Latitude- convert raw latitude value into degree format and pass that value as string
-		//degrees_buffer latitude
-		strcpy(latitude,degrees_buffer);
-		get_longitude(GGA_Pointers[2]);        /* Extract Longitude */
-		//degrees_buffer longtitude
-		strcpy(longtitude,degrees_buffer);
-		//get_altitude(GGA_Pointers[7]);         /* Extract Altitude in meters*/ 
-}
-
 int isDriverSleepingIR(){
 	int timeInterval=40;
 	int flag=0;

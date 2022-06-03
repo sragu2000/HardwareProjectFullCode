@@ -123,9 +123,6 @@
     <Compile Include="ADC.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="gsm.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="headerfiles.h">
       <SubType>compile</SubType>
     </Compile>
@@ -135,7 +132,7 @@
     <Compile Include="I2C_Master_H_file.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="LCD_16x2_H_file.h">
+    <Compile Include="LCD.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -151,15 +148,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="registerFunctions.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Track.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="USART_Interrupt.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="USART_Interrupt.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

@@ -6,5 +6,3 @@ I2C_Master_C_file.c
 
 main.c
 
-USART_Interrupt.c
-

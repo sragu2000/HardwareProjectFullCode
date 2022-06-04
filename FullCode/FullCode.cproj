@@ -123,6 +123,9 @@
     <Compile Include="ADC.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="gsmmessage.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="headerfiles.h">
       <SubType>compile</SubType>
     </Compile>
@@ -148,6 +151,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="registerFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Track.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usart.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

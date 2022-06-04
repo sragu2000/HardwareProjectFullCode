@@ -14,6 +14,9 @@
 #include "I2C_Master_H_file.h"
 #include "mpu6050.h"
 #include "pwm.h"
+#include "usart.h"
+#include "Track.h"
+#include "gsmmessage.h"
 
 //pin definitions
 #define flame 4
@@ -30,6 +33,6 @@ void onHazardLight();
 void playRadio();
 void PWM_init();
 void offHazardLight();
-void getAllValuesGps();
 int isDriverSleepingIR();
+void sendLocation();
 

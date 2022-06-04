@@ -913,11 +913,11 @@ END GROUP
  .debug_abbrev  0x000004a3       0xc6 I2C_Master_C_file.o
  .debug_abbrev  0x00000569      0x30a main.o
 
-.debug_line     0x00000000     0x1130
+.debug_line     0x00000000     0x113d
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_line    0x00000116      0x2c3 I2C_Master_C_file.o
- .debug_line    0x000003d9      0xd57 main.o
+ .debug_line    0x000003d9      0xd64 main.o
 
 .debug_frame    0x00000000      0x420
  *(.debug_frame)

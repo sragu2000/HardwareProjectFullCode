@@ -19,15 +19,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_abbrev 00000873  00000000  00000000  00003f56  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00001130  00000000  00000000  000047c9  2**0
+  8 .debug_line   0000113d  00000000  00000000  000047c9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000420  00000000  00000000  000058fc  2**2
+  9 .debug_frame  00000420  00000000  00000000  00005908  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000007ad  00000000  00000000  00005d1c  2**0
+ 10 .debug_str    000007ad  00000000  00000000  00005d28  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000181f  00000000  00000000  000064c9  2**0
+ 11 .debug_loc    0000181f  00000000  00000000  000064d5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000168  00000000  00000000  00007ce8  2**0
+ 12 .debug_ranges 00000168  00000000  00000000  00007cf4  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1386,16 +1386,15 @@ int isDriverSleepingIR(){
      986:	8c ed       	ldi	r24, 0xDC	; 220
      988:	90 e0       	ldi	r25, 0x00	; 0
      98a:	0e 94 72 01 	call	0x2e4	; 0x2e4 <LCD_String>
-	//int timeInterval=40; real value due to error
 	int timeInterval=5;
 	int flag=0;
 	for(int i=1;i<=timeInterval;i++){
      98e:	81 e0       	ldi	r24, 0x01	; 1
      990:	90 e0       	ldi	r25, 0x00	; 0
+}
 int isDriverSleepingIR(){
 	LCD_Clear();
 	LCD_String("Checking Eyes");
-	//int timeInterval=40; real value due to error
 	int timeInterval=5;
 	int flag=0;
      992:	c0 e0       	ldi	r28, 0x00	; 0
@@ -1408,7 +1407,7 @@ int isDriverSleepingIR(){
 			flag++;
      99c:	21 96       	adiw	r28, 0x01	; 1
      99e:	01 c0       	rjmp	.+2      	; 0x9a2 <isDriverSleepingIR+0x24>
-			}else{
+		}else{
 			flag--;
      9a0:	21 97       	sbiw	r28, 0x01	; 1
      9a2:	2f e7       	ldi	r18, 0x7F	; 127
@@ -1420,9 +1419,9 @@ int isDriverSleepingIR(){
      9ae:	e1 f7       	brne	.-8      	; 0x9a8 <isDriverSleepingIR+0x2a>
      9b0:	00 c0       	rjmp	.+0      	; 0x9b2 <isDriverSleepingIR+0x34>
      9b2:	00 00       	nop
+int isDriverSleepingIR(){
 	LCD_Clear();
 	LCD_String("Checking Eyes");
-	//int timeInterval=40; real value due to error
 	int timeInterval=5;
 	int flag=0;
 	for(int i=1;i<=timeInterval;i++){
@@ -1430,7 +1429,7 @@ int isDriverSleepingIR(){
      9b6:	86 30       	cpi	r24, 0x06	; 6
      9b8:	91 05       	cpc	r25, r1
      9ba:	74 f3       	brlt	.-36     	; 0x998 <isDriverSleepingIR+0x1a>
-			}else{
+		}else{
 			flag--;
 		}
 		_delay_ms(50);
@@ -1454,7 +1453,6 @@ int isDriverSleepingIR(){
      9d4:	80 e0       	ldi	r24, 0x00	; 0
      9d6:	90 e0       	ldi	r25, 0x00	; 0
 	}
-	
 }
      9d8:	df 91       	pop	r29
      9da:	cf 91       	pop	r28
@@ -1593,14 +1591,13 @@ int main(void){
      ac2:	0e 94 ef 04 	call	0x9de	; 0x9de <sendLocation>
      ac6:	e0 cf       	rjmp	.-64     	; 0xa88 <main+0x62>
 		}
-		//else 1 start
 		else{
-			//set wheel speed vehicle
 			ADC_Init();
      ac8:	0e 94 b1 01 	call	0x362	; 0x362 <ADC_Init>
-			int val=ADC_Read(0);float speed=(val/1024.0)*255.0;OCR0=(int)speed;
+			int val=ADC_Read(0);
      acc:	80 e0       	ldi	r24, 0x00	; 0
      ace:	0e 94 b7 01 	call	0x36e	; 0x36e <ADC_Read>
+			float speed=(val/1024.0)*255.0;
      ad2:	bc 01       	movw	r22, r24
      ad4:	99 0f       	add	r25, r25
      ad6:	88 0b       	sbc	r24, r24
@@ -1616,17 +1613,12 @@ int main(void){
      aee:	4f e7       	ldi	r20, 0x7F	; 127
      af0:	53 e4       	ldi	r21, 0x43	; 67
      af2:	0e 94 e1 07 	call	0xfc2	; 0xfc2 <__mulsf3>
+			OCR0=(int)speed;
      af6:	0e 94 f9 06 	call	0xdf2	; 0xdf2 <__fixsfsi>
      afa:	6c bf       	out	0x3c, r22	; 60
-			//get pressure
 			int pressure = ADC_Read(1);
      afc:	81 e0       	ldi	r24, 0x01	; 1
      afe:	0e 94 b7 01 	call	0x36e	; 0x36e <ADC_Read>
-			//char z[5];itoa(val,z,10);
-			//char h[5];itoa(pressure,h,10);
-			//LCD_String(z);LCD_Command(0xc0);LCD_String(h);
-			//_delay_ms(100);
-			//LCD_Clear();
 			if (pressure > 109){// if value gt 109 vehicle is moving in proteus 21
      b02:	8e 36       	cpi	r24, 0x6E	; 110
      b04:	91 05       	cpc	r25, r1
@@ -1638,17 +1630,16 @@ int main(void){
      b0e:	80 e3       	ldi	r24, 0x30	; 48
      b10:	91 e0       	ldi	r25, 0x01	; 1
      b12:	0e 94 72 01 	call	0x2e4	; 0x2e4 <LCD_String>
-				//------------------------------------------------------------
 				if(pinRead(PINC,alcohol)==0x20){
      b16:	9d 9b       	sbis	0x13, 5	; 19
      b18:	1a c0       	rjmp	.+52     	; 0xb4e <main+0x128>
-							LCD_Clear();
+					LCD_Clear();
      b1a:	0e 94 a4 01 	call	0x348	; 0x348 <LCD_Clear>
-							LCD_String("Alcohol Detected");
+					LCD_String("Alcohol Detected");
      b1e:	8d e3       	ldi	r24, 0x3D	; 61
      b20:	91 e0       	ldi	r25, 0x01	; 1
      b22:	0e 94 72 01 	call	0x2e4	; 0x2e4 <LCD_String>
-							ringAlarm();
+					ringAlarm();
      b26:	0e 94 ab 04 	call	0x956	; 0x956 <ringAlarm>
      b2a:	9f ef       	ldi	r25, 0xFF	; 255
      b2c:	20 e7       	ldi	r18, 0x70	; 112
@@ -1659,12 +1650,12 @@ int main(void){
      b36:	e1 f7       	brne	.-8      	; 0xb30 <main+0x10a>
      b38:	00 c0       	rjmp	.+0      	; 0xb3a <main+0x114>
      b3a:	00 00       	nop
-							_delay_ms(100);
-							stopAlarm();
+					_delay_ms(100);
+					stopAlarm();
      b3c:	0e 94 af 04 	call	0x95e	; 0x95e <stopAlarm>
-							LCD_Clear();
+					LCD_Clear();
      b40:	0e 94 a4 01 	call	0x348	; 0x348 <LCD_Clear>
-							sendLocation("Alcohol Detected");
+					sendLocation("Alcohol Detected");
      b44:	8d e3       	ldi	r24, 0x3D	; 61
      b46:	91 e0       	ldi	r25, 0x01	; 1
      b48:	0e 94 ef 04 	call	0x9de	; 0x9de <sendLocation>
@@ -1694,7 +1685,6 @@ int main(void){
      b76:	8e e4       	ldi	r24, 0x4E	; 78
      b78:	91 e0       	ldi	r25, 0x01	; 1
      b7a:	0e 94 72 01 	call	0x2e4	; 0x2e4 <LCD_String>
-						//for(int i=1;i<=20;i++){
 						int x;
 						for(x=1;x<=4;x++){
      b7e:	81 e0       	ldi	r24, 0x01	; 1
@@ -1720,10 +1710,10 @@ int main(void){
      ba2:	e1 f7       	brne	.-8      	; 0xb9c <main+0x176>
      ba4:	00 c0       	rjmp	.+0      	; 0xba6 <main+0x180>
      ba6:	00 00       	nop
+						ringAlarm();
 						onHazardLight();
 						LCD_Command(0xc0);
 						LCD_String("Waiting..");
-						//for(int i=1;i<=20;i++){
 						int x;
 						for(x=1;x<=4;x++){
      ba8:	01 96       	adiw	r24, 0x01	; 1
@@ -1777,7 +1767,6 @@ int main(void){
 						while(1){}//let motor to slowdown fully
 					}
 				}
-				//------------------------------------------------------------
 			}else{
 				LCD_String("Vehicle is");
      bfc:	80 e9       	ldi	r24, 0x90	; 144

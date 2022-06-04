@@ -50,7 +50,7 @@ int main(void){
 							LCD_Clear();
 							sendLocation("Alcohol Detected");
 				}else{
-					if(isDriverSleepingIR()&& 1){
+					if(isDriverSleepingIR()&& (pinRead(PINC,0)==0x01)){
 						LCD_Clear();
 						LCD_String("Sleeping");
 						ringAlarm();

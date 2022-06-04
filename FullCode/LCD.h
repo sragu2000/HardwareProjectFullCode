@@ -1,11 +1,3 @@
-
-/*  
-   LCD16x2 4 bit ATmega16 interface
-   http://www.electronicwings.com
-*/
-
-
-
 #define F_CPU 8000000UL					/* Define CPU Frequency e.g. here its 8MHz */
 #include <avr/io.h>						/* Include AVR std. library file */
 #include <util/delay.h>					/* Include inbuilt defined Delay header file */

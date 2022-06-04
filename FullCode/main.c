@@ -12,7 +12,7 @@ int main(void){
 	start:
 	LCD_String("Welcome");_delay_ms(50);LCD_Clear();
 	while (1){
-		ADC_Init();
+		
 		//flame detection
 		if(pinRead(PINC,flame)==0x10){
 			LCD_Clear();
@@ -28,16 +28,16 @@ int main(void){
 		//else 1 start
 		else{
 			//set wheel speed vehicle
-			
-			int val=ADC_Read(1);float speed=(val/1024.0)*255.0;OCR0=(int)speed;
+			ADC_Init();
+			int val=ADC_Read(0);float speed=(val/1024.0)*255.0;OCR0=(int)speed;
 			//get pressure
-			int pressure = ADC_Read(0);
-			//int pressure = 0;
-			char h[5];itoa(pressure,h,10);
-			LCD_String(h);
-			_delay_ms(100);
-			LCD_Clear();
-			if (pressure > 107){// if value gt 107 vehicle is moving
+			int pressure = ADC_Read(1);
+			//char z[5];itoa(val,z,10);
+			//char h[5];itoa(pressure,h,10);
+			//LCD_String(z);LCD_Command(0xc0);LCD_String(h);
+			//_delay_ms(100);
+			//LCD_Clear();
+			if (pressure > 109){// if value gt 109 vehicle is moving in proteus 21
 				LCD_Clear();
 				LCD_String("Driving mode");
 				//------------------------------------------------------------

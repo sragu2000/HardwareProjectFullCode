@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <avr/interrupt.h>
-#include "ADC.h"
+#include "adc.h"
 #include <avr/io.h>
 #include <inttypes.h>
 #include "MPU6050_res_define.h"

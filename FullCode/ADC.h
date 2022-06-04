@@ -18,6 +18,6 @@ int ADC_Read(char channel)
 	_delay_us(10);
 	AinLow = (int)ADCL;		/* Read lower byte*/
 	Ain = (int)ADCH*256;		/* Read higher 2 bits and Multiply with weight */
-	Ain = Ain + AinLow;
+	Ain = Ain + AinLow;				
 	return(Ain);			/* Return digital value*/
 }

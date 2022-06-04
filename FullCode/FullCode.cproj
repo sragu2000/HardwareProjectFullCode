@@ -120,7 +120,7 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ADC.h">
+    <Compile Include="adc.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="gsmmessage.h">

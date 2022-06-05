@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000170  00000000  00000000  00001ba0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00002246  00000000  00000000  00001d10  2**0
+  6 .debug_info   00002254  00000000  00000000  00001d10  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000873  00000000  00000000  00003f56  2**0
+  7 .debug_abbrev 00000873  00000000  00000000  00003f64  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000113d  00000000  00000000  000047c9  2**0
+  8 .debug_line   0000113d  00000000  00000000  000047d7  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000420  00000000  00000000  00005908  2**2
+  9 .debug_frame  00000420  00000000  00000000  00005914  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000007ad  00000000  00000000  00005d28  2**0
+ 10 .debug_str    000007ad  00000000  00000000  00005d34  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000181f  00000000  00000000  000064d5  2**0
+ 11 .debug_loc    0000181f  00000000  00000000  000064e1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000168  00000000  00000000  00007cf4  2**0
+ 12 .debug_ranges 00000168  00000000  00000000  00007d00  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1594,36 +1594,36 @@ int main(void){
 		else{
 			ADC_Init();
      ac8:	0e 94 b1 01 	call	0x362	; 0x362 <ADC_Init>
-			int val=ADC_Read(0);
-     acc:	80 e0       	ldi	r24, 0x00	; 0
-     ace:	0e 94 b7 01 	call	0x36e	; 0x36e <ADC_Read>
-			float speed=(val/1024.0)*255.0;
-     ad2:	bc 01       	movw	r22, r24
-     ad4:	99 0f       	add	r25, r25
-     ad6:	88 0b       	sbc	r24, r24
-     ad8:	99 0b       	sbc	r25, r25
-     ada:	0e 94 31 07 	call	0xe62	; 0xe62 <__floatsisf>
-     ade:	20 e0       	ldi	r18, 0x00	; 0
-     ae0:	30 e0       	ldi	r19, 0x00	; 0
-     ae2:	40 e8       	ldi	r20, 0x80	; 128
-     ae4:	5a e3       	ldi	r21, 0x3A	; 58
-     ae6:	0e 94 e1 07 	call	0xfc2	; 0xfc2 <__mulsf3>
-     aea:	20 e0       	ldi	r18, 0x00	; 0
-     aec:	30 e0       	ldi	r19, 0x00	; 0
-     aee:	4f e7       	ldi	r20, 0x7F	; 127
-     af0:	53 e4       	ldi	r21, 0x43	; 67
-     af2:	0e 94 e1 07 	call	0xfc2	; 0xfc2 <__mulsf3>
-			OCR0=(int)speed;
-     af6:	0e 94 f9 06 	call	0xdf2	; 0xdf2 <__fixsfsi>
-     afa:	6c bf       	out	0x3c, r22	; 60
 			int pressure = ADC_Read(1);
-     afc:	81 e0       	ldi	r24, 0x01	; 1
-     afe:	0e 94 b7 01 	call	0x36e	; 0x36e <ADC_Read>
+     acc:	81 e0       	ldi	r24, 0x01	; 1
+     ace:	0e 94 b7 01 	call	0x36e	; 0x36e <ADC_Read>
 			if (pressure > 109){// if value gt 109 vehicle is moving in proteus 21
-     b02:	8e 36       	cpi	r24, 0x6E	; 110
-     b04:	91 05       	cpc	r25, r1
-     b06:	0c f4       	brge	.+2      	; 0xb0a <main+0xe4>
-     b08:	79 c0       	rjmp	.+242    	; 0xbfc <main+0x1d6>
+     ad2:	8e 36       	cpi	r24, 0x6E	; 110
+     ad4:	91 05       	cpc	r25, r1
+     ad6:	0c f4       	brge	.+2      	; 0xada <main+0xb4>
+     ad8:	91 c0       	rjmp	.+290    	; 0xbfc <main+0x1d6>
+				int val=ADC_Read(0);//accelar
+     ada:	80 e0       	ldi	r24, 0x00	; 0
+     adc:	0e 94 b7 01 	call	0x36e	; 0x36e <ADC_Read>
+				float speed=(val/1024.0)*255.0;//adc->pwm
+     ae0:	bc 01       	movw	r22, r24
+     ae2:	99 0f       	add	r25, r25
+     ae4:	88 0b       	sbc	r24, r24
+     ae6:	99 0b       	sbc	r25, r25
+     ae8:	0e 94 31 07 	call	0xe62	; 0xe62 <__floatsisf>
+     aec:	20 e0       	ldi	r18, 0x00	; 0
+     aee:	30 e0       	ldi	r19, 0x00	; 0
+     af0:	40 e8       	ldi	r20, 0x80	; 128
+     af2:	5a e3       	ldi	r21, 0x3A	; 58
+     af4:	0e 94 e1 07 	call	0xfc2	; 0xfc2 <__mulsf3>
+     af8:	20 e0       	ldi	r18, 0x00	; 0
+     afa:	30 e0       	ldi	r19, 0x00	; 0
+     afc:	4f e7       	ldi	r20, 0x7F	; 127
+     afe:	53 e4       	ldi	r21, 0x43	; 67
+     b00:	0e 94 e1 07 	call	0xfc2	; 0xfc2 <__mulsf3>
+				OCR0=(int)speed;//set speed
+     b04:	0e 94 f9 06 	call	0xdf2	; 0xdf2 <__fixsfsi>
+     b08:	6c bf       	out	0x3c, r22	; 60
 				LCD_Clear();
      b0a:	0e 94 a4 01 	call	0x348	; 0x348 <LCD_Clear>
 				LCD_String("Driving mode");

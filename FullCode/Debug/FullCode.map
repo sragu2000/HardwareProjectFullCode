@@ -901,11 +901,11 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x2246
+.debug_info     0x00000000     0x2254
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_info    0x000004e6      0x1c9 I2C_Master_C_file.o
- .debug_info    0x000006af     0x1b97 main.o
+ .debug_info    0x000006af     0x1ba5 main.o
 
 .debug_abbrev   0x00000000      0x873
  *(.debug_abbrev)

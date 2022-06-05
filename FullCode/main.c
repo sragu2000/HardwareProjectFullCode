@@ -10,7 +10,7 @@ int main(void){
 	USART_Init(9600);
 	sei();
 	start:
-	LCD_String("Welcome");_delay_ms(50);LCD_Clear();
+	LCD_String("Welcome");_delay_ms(3000);LCD_Clear();
 	while (1){
 		
 		//flame detection
@@ -27,11 +27,11 @@ int main(void){
 		}
 		else{
 			ADC_Init();
-			int val=ADC_Read(0);
-			float speed=(val/1024.0)*255.0;
-			OCR0=(int)speed;
 			int pressure = ADC_Read(1);
 			if (pressure > 109){// if value gt 109 vehicle is moving in proteus 21
+				int val=ADC_Read(0);//accelar
+				float speed=(val/1024.0)*255.0;//adc->pwm
+				OCR0=(int)speed;//set speed
 				LCD_Clear();
 				LCD_String("Driving mode");
 				if(pinRead(PINC,alcohol)==0x20){

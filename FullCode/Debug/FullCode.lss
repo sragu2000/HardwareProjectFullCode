@@ -1539,13 +1539,13 @@ int main(void){
 	sei();
      a68:	78 94       	sei
 	start:
-	LCD_String("Welcome");_delay_ms(50);LCD_Clear();
+	LCD_String("Welcome");_delay_ms(3000);LCD_Clear();
      a6a:	85 e0       	ldi	r24, 0x05	; 5
      a6c:	91 e0       	ldi	r25, 0x01	; 1
      a6e:	0e 94 72 01 	call	0x2e4	; 0x2e4 <LCD_String>
-     a72:	8f e7       	ldi	r24, 0x7F	; 127
-     a74:	98 e3       	ldi	r25, 0x38	; 56
-     a76:	21 e0       	ldi	r18, 0x01	; 1
+     a72:	8f ef       	ldi	r24, 0xFF	; 255
+     a74:	9d e3       	ldi	r25, 0x3D	; 61
+     a76:	29 e4       	ldi	r18, 0x49	; 73
      a78:	81 50       	subi	r24, 0x01	; 1
      a7a:	90 40       	sbci	r25, 0x00	; 0
      a7c:	20 40       	sbci	r18, 0x00	; 0

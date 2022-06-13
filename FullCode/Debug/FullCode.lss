@@ -1555,11 +1555,11 @@ int main(void){
      a82:	e1 f7       	brne	.-8      	; 0xa7c <main+0x56>
      a84:	00 c0       	rjmp	.+0      	; 0xa86 <main+0x60>
      a86:	00 00       	nop
-	_delay_ms(100);
+	_delay_ms(100); //actual delay is 3000ms
 	LCD_Clear();
      a88:	0e 94 a4 01 	call	0x348	; 0x348 <LCD_Clear>
 	while (1){
-		
+
 		//flame detection
 		if(pinRead(PINC,flame)==0x10){
      a8c:	9c 9b       	sbis	0x13, 4	; 19
@@ -1607,7 +1607,7 @@ int main(void){
      ad8:	91 05       	cpc	r25, r1
      ada:	0c f4       	brge	.+2      	; 0xade <main+0xb8>
      adc:	86 c0       	rjmp	.+268    	; 0xbea <main+0x1c4>
-				int val=ADC_Read(0);//accelar
+				int val=ADC_Read(0);//acce
      ade:	80 e0       	ldi	r24, 0x00	; 0
      ae0:	0e 94 b7 01 	call	0x36e	; 0x36e <ADC_Read>
 				float speed=(val/1024.0)*255.0;//adc->pwm
@@ -1707,7 +1707,7 @@ int main(void){
      b98:	e1 f7       	brne	.-8      	; 0xb92 <main+0x16c>
      b9a:	00 c0       	rjmp	.+0      	; 0xb9c <main+0x176>
      b9c:	00 00       	nop
-						_delay_ms(500);
+						_delay_ms(500); //actual delay is 5000ms
 						LCD_Clear();
      b9e:	0e 94 a4 01 	call	0x348	; 0x348 <LCD_Clear>
 						LCD_String("Waiting");

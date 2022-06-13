@@ -11,10 +11,10 @@ int main(void){
 	USART_Init(9600);
 	sei();
 	LCD_String("Welcome");
-	_delay_ms(100);
+	_delay_ms(100); //actual delay is 3000ms
 	LCD_Clear();
 	while (1){
-		
+
 		//flame detection
 		if(pinRead(PINC,flame)==0x10){
 			LCD_Clear();
@@ -31,7 +31,7 @@ int main(void){
 			ADC_Init();
 			int pressure = ADC_Read(1);
 			if (pressure > 109){// if value gt 109 vehicle is moving in proteus 21
-				int val=ADC_Read(0);//accelar
+				int val=ADC_Read(0);//acce
 				float speed=(val/1024.0)*255.0;//adc->pwm
 				OCR0=(int)speed;//set speed
 				LCD_Clear();
@@ -55,7 +55,7 @@ int main(void){
 						GICR = 1<<INT0;		/* Enable INT0*/
 						MCUCR = 1<<ISC01 | 1<<ISC00;  /* Trigger INT0 on rising edge */
 						sei();			/* Enable Global Interrupt */
-						_delay_ms(500);
+						_delay_ms(500); //actual delay is 5000ms
 						LCD_Clear();
 						LCD_String("Waiting");
 						LCD_Command(0xc0);

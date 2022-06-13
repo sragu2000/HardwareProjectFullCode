@@ -2,15 +2,17 @@
 #define SREG   _SFR_IO8(0x3f)
 #include "headerfiles.h"
 int main(void){
-	DDRD=0xE4;
+	DDRD=0xE8;
+	PORTD=0x04;
 	LCD_Init();LCD_String("Initializing..");_delay_ms(50);LCD_Clear();
 	I2C_Init();
 	PWM_init();
 	GGA_Index=0;
 	USART_Init(9600);
 	sei();
-	start:
-	LCD_String("Welcome");_delay_ms(3000);LCD_Clear();
+	LCD_String("Welcome");
+	_delay_ms(100);
+	LCD_Clear();
 	while (1){
 		
 		//flame detection
@@ -50,16 +52,10 @@ int main(void){
 						onHazardLight();
 						LCD_Command(0xc0);
 						LCD_String("Waiting..");
-						int x;
-						for(x=1;x<=4;x++){
-							if(pinRead(PINC,3)==0x08){
-								stopAlarm();
-								offHazardLight();
-								LCD_Clear();
-								goto start;
-							}
-							_delay_ms(125);
-						}
+						GICR = 1<<INT0;		/* Enable INT0*/
+						MCUCR = 1<<ISC01 | 1<<ISC00;  /* Trigger INT0 on rising edge */
+						sei();			/* Enable Global Interrupt */
+						_delay_ms(500);
 						LCD_Clear();
 						LCD_String("Waiting");
 						LCD_Command(0xc0);
@@ -129,7 +125,16 @@ void sendLocation(char* message){
 	get_latitude(GGA_Pointers[0]);char* lat=lat_degrees_buffer;
 	get_longitude(GGA_Pointers[2]);char* lngtd=long_degrees_buffer;
 	get_altitude(GGA_Pointers[7]);char* altitude=Altitude_Buffer;
-	PORTD=0x04;// change signal using mux
+	PORTD=0x08;// change signal using mux
 	sendMessage(message,lat,lngtd,altitude);
 	PORTD=0x00;// turn back to normal
+}
+
+ISR(INT0_vect)
+{
+	LCD_Clear();
+	portLow(PORTD,6);
+	portLow(PORTD,7);
+	_delay_ms(50);
+	main();
 }
